@@ -1,13 +1,13 @@
 # Sudoku App
 
-A single-file Sudoku web app ready for GitHub Pages.
+A single-file Sudoku web app optimized for GitHub Pages, iPad/tablets, and phones.
 
 ## Features
 
 - Real Sudoku generator with unique-solution puzzle creation
 - Difficulty levels: Easy, Medium, Hard, Expert
-- iPhone-friendly responsive layout
-- Add to iPhone Home Screen support
+- Responsive layout for desktop, iPad/tablets, phones, narrow phones, and landscape screens
+- iPhone and iPad Home Screen support
 - Timer
 - Auto-pause when app loses focus
 - Resume overlay
@@ -25,8 +25,8 @@ A single-file Sudoku web app ready for GitHub Pages.
 
 ## Deploy on GitHub Pages
 
-1. Create or open your GitHub repository.
-2. Upload `index.html` and `README.md`.
+1. Open your GitHub repository.
+2. Upload or replace `index.html` and `README.md`.
 3. Go to **Settings > Pages**.
 4. Under **Build and deployment**, choose:
    - Source: `Deploy from a branch`
@@ -45,7 +45,7 @@ For your current repo, the expected URL is:
 https://mgaudone-cmyk.github.io/Sudoku/
 ```
 
-## iPhone install
+## Add to iPhone or iPad Home Screen
 
 1. Open the GitHub Pages link in Safari.
 2. Tap the Share icon.
