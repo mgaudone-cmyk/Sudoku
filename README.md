@@ -1,54 +1,35 @@
 # Sudoku App
 
-A single-file Sudoku web app optimized for GitHub Pages, iPad/tablets, and phones.
+Adaptive hybrid Sudoku web app for GitHub Pages.
+
+## Improvements
+
+- Phone: compact vertical layout with controls always visible.
+- iPad/tablet landscape: board on the left, controls on the right.
+- iPad/tablet portrait: board above, controls below in compact rows.
+- Prevents page scrolling during play.
+- Better full-screen behavior when added to iPhone/iPad Home Screen.
 
 ## Features
 
 - Real Sudoku generator with unique-solution puzzle creation
 - Difficulty levels: Easy, Medium, Hard, Expert
-- Responsive layout for desktop, iPad/tablets, phones, narrow phones, and landscape screens
-- iPhone and iPad Home Screen support
 - Timer
 - Auto-pause when app loses focus
 - Resume overlay
 - Mistake tracking
 - Notes mode
-- Hint button
-- Check board button
-- Solve puzzle button
-- Highlights matching visible numbers when a number is selected or entered
+- Hint, Check, and Solve
+- Highlights matching visible numbers
 
-## Files
+## Deploy
 
-- `index.html` — the full app
-- `README.md` — this file
+Replace your repo files with `index.html` and `README.md`.
 
-## Deploy on GitHub Pages
-
-1. Open your GitHub repository.
-2. Upload or replace `index.html` and `README.md`.
-3. Go to **Settings > Pages**.
-4. Under **Build and deployment**, choose:
-   - Source: `Deploy from a branch`
-   - Branch: `main`
-   - Folder: `/root`
-5. Save.
-6. Open your app at:
-
-```text
-https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/
-```
-
-For your current repo, the expected URL is:
+Expected URL:
 
 ```text
 https://mgaudone-cmyk.github.io/Sudoku/
 ```
 
-## Add to iPhone or iPad Home Screen
-
-1. Open the GitHub Pages link in Safari.
-2. Tap the Share icon.
-3. Tap **Add to Home Screen**.
-4. Name it `Sudoku`.
-5. Tap **Add**.
+For best full-screen experience on iPhone/iPad, open the URL in Safari and use Share > Add to Home Screen.
