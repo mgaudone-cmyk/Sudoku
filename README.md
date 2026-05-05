@@ -1,42 +1,46 @@
-# Sudoku Working Mobile Fixed
+# Sudoku Notes Upgrade
 
-This version restores the full Sudoku engine and keeps the mobile layout fix.
+This version restores the full Sudoku app and improves notes.
 
-## Fixed
+## New upgrades
 
-- Real Sudoku board is restored.
-- The board is no longer empty.
-- Mobile layout avoids top clipping better.
-- Controls remain visible.
-- iPad/tablet layout remains adaptive.
+- Larger note numbers inside cells
+- Auto notes button
+- Single-candidate hint button
+- Live conflict highlighting when the same number conflicts in a row, column, or box
+- Existing features preserved:
+  - Real Sudoku generator
+  - Unique solution validation
+  - Difficulty levels
+  - Timer
+  - Pause/resume overlay
+  - Notes mode
+  - Hint
+  - Check
+  - Solve
+  - Matching-number highlight
+  - Mistake tracking
 
-## Features
+## How notes work
 
-- Real Sudoku generator
-- Unique solution validation
-- Difficulty levels
-- Timer
-- Pause/resume overlay
-- Notes mode
-- Hint
-- Check
-- Solve
-- Matching-number highlight
-- Mistake tracking
+- Notes OFF: numbers entered are final answers.
+- Notes ON: numbers entered are pencil marks/candidates.
+- Auto notes fills possible candidates based on the current board.
+- Single hint finds a cell with only one possible candidate, when available.
 
 ## Deploy
 
-Upload or replace these files in your GitHub repo:
+Replace your GitHub repo files with:
 
 - `index.html`
 - `README.md`
 
-Expected GitHub Pages URL:
+Your expected GitHub Pages URL:
 
 ```text
 https://mgaudone-cmyk.github.io/Sudoku/
 ```
 
-## Best full-screen use
+## Best mobile experience
 
 Open in Safari, tap Share, then Add to Home Screen.

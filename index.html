@@ -172,6 +172,13 @@
       color:#dc2626;
     }
 
+    .cell.conflict {
+      background:#ffe4e6;
+      color:#be123c;
+      box-shadow:inset 0 0 0 3px #fb7185;
+      z-index:2;
+    }
+
     .cell.correct:not(.fixed) {
       color:#15803d;
     }
@@ -198,9 +205,9 @@
       align-items:center;
       justify-items:center;
       padding:2px;
-      font-size:clamp(8px, 2vw, 13px);
-      color:#64748b;
-      font-weight:700;
+      font-size:clamp(12px, 3vw, 18px);
+      color:#334155;
+      font-weight:800;
     }
 
     .message {
@@ -560,6 +567,11 @@
           </div>
           <div style="height:5px"></div>
           <div class="action-row">
+            <button id="autoNotes">Auto notes</button>
+            <button id="singleHint">Single hint</button>
+          </div>
+          <div style="height:5px"></div>
+          <div class="action-row">
             <button id="hint">Hint</button>
             <button id="check">Check</button>
           </div>
@@ -717,6 +729,98 @@
       return { full, puz };
     }
 
+
+    function getCandidates(cellIndex) {
+      if (player[cellIndex]) return [];
+      const used = new Set();
+
+      for (let c = 0; c < 9; c++) {
+        const v = player[index(rowOf(cellIndex), c)];
+        if (v) used.add(v);
+      }
+
+      for (let r = 0; r < 9; r++) {
+        const v = player[index(r, colOf(cellIndex))];
+        if (v) used.add(v);
+      }
+
+      const br = Math.floor(rowOf(cellIndex) / 3) * 3;
+      const bc = Math.floor(colOf(cellIndex) / 3) * 3;
+
+      for (let r = br; r < br + 3; r++) {
+        for (let c = bc; c < bc + 3; c++) {
+          const v = player[index(r, c)];
+          if (v) used.add(v);
+        }
+      }
+
+      const candidates = [];
+      for (let n = 1; n <= 9; n++) {
+        if (!used.has(n)) candidates.push(n);
+      }
+      return candidates;
+    }
+
+    function hasDuplicateConflict(cellIndex) {
+      const value = player[cellIndex];
+      if (!value) return false;
+
+      for (let c = 0; c < 9; c++) {
+        const i = index(rowOf(cellIndex), c);
+        if (i !== cellIndex && player[i] === value) return true;
+      }
+
+      for (let r = 0; r < 9; r++) {
+        const i = index(r, colOf(cellIndex));
+        if (i !== cellIndex && player[i] === value) return true;
+      }
+
+      const br = Math.floor(rowOf(cellIndex) / 3) * 3;
+      const bc = Math.floor(colOf(cellIndex) / 3) * 3;
+
+      for (let r = br; r < br + 3; r++) {
+        for (let c = bc; c < bc + 3; c++) {
+          const i = index(r, c);
+          if (i !== cellIndex && player[i] === value) return true;
+        }
+      }
+
+      return false;
+    }
+
+    function fillAutoNotes() {
+      if (gameOver || paused) return;
+
+      for (let i = 0; i < 81; i++) {
+        if (!fixed[i] && !player[i]) {
+          notes[i] = new Set(getCandidates(i));
+        }
+      }
+
+      setMessage('Auto notes added based on current board.');
+      renderBoard();
+    }
+
+    function singleCandidateHint() {
+      if (gameOver || paused) return;
+
+      for (let i = 0; i < 81; i++) {
+        if (!fixed[i] && !player[i]) {
+          const candidates = getCandidates(i);
+          if (candidates.length === 1) {
+            selected = i;
+            highlightedNumber = candidates[0];
+            notes[i] = new Set(candidates);
+            setMessage(`Single candidate found: ${candidates[0]} at row ${rowOf(i) + 1}, column ${colOf(i) + 1}.`);
+            renderBoard();
+            return;
+          }
+        }
+      }
+
+      setMessage('No single-candidate cell found right now.');
+    }
+
     function renderBoard() {
       boardEl.innerHTML = '';
 
@@ -738,6 +842,7 @@
 
         if (highlightedNumber && player[i] === highlightedNumber) cell.classList.add('same');
         if (selected === i) cell.classList.add('selected');
+        if (hasDuplicateConflict(i)) cell.classList.add('conflict');
         if (player[i] && player[i] !== solution[i]) cell.classList.add('error');
         if (!fixed[i] && player[i] && player[i] === solution[i]) cell.classList.add('correct');
 
@@ -1010,6 +1115,8 @@
     document.getElementById('newGame').addEventListener('click', newGame);
     document.getElementById('erase').addEventListener('click', eraseCell);
     document.getElementById('check').addEventListener('click', checkBoard);
+    document.getElementById('autoNotes').addEventListener('click', fillAutoNotes);
+    document.getElementById('singleHint').addEventListener('click', singleCandidateHint);
     document.getElementById('hint').addEventListener('click', giveHint);
     document.getElementById('solve').addEventListener('click', solvePuzzle);
     noteModeBtn.addEventListener('click', toggleNotes);
