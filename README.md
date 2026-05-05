@@ -1,35 +1,50 @@
-# Sudoku App
+# Sudoku Mobile App Mode
 
-Adaptive hybrid Sudoku web app for GitHub Pages.
+A single-file Sudoku app optimized to feel like a real mobile app.
 
 ## Improvements
 
-- Phone: compact vertical layout with controls always visible.
-- iPad/tablet landscape: board on the left, controls on the right.
-- iPad/tablet portrait: board above, controls below in compact rows.
-- Prevents page scrolling during play.
-- Better full-screen behavior when added to iPhone/iPad Home Screen.
+- No large title header on phone
+- Compact top status bar only
+- Board maximized for available screen height
+- Controls always visible
+- No page scrolling during gameplay
+- iPad/tablet layout adapts:
+  - landscape: board left, controls right
+  - portrait: board top, controls below
+- Better iPhone/iPad Home Screen support
 
 ## Features
 
-- Real Sudoku generator with unique-solution puzzle creation
-- Difficulty levels: Easy, Medium, Hard, Expert
+- Real Sudoku generator with unique-solution puzzles
+- Easy, Medium, Hard, Expert levels
 - Timer
 - Auto-pause when app loses focus
 - Resume overlay
-- Mistake tracking
 - Notes mode
-- Hint, Check, and Solve
-- Highlights matching visible numbers
+- Hint
+- Check board
+- Solve puzzle
+- Matching-number highlight
+- Mistake tracking
 
 ## Deploy
 
-Replace your repo files with `index.html` and `README.md`.
+Upload or replace these files in your GitHub repo:
 
-Expected URL:
+- `index.html`
+- `README.md`
+
+Your GitHub Pages URL should be:
 
 ```text
 https://mgaudone-cmyk.github.io/Sudoku/
 ```
 
-For best full-screen experience on iPhone/iPad, open the URL in Safari and use Share > Add to Home Screen.
+## Best full-screen mode on iPhone/iPad
+
+Open the URL in Safari, then:
+
+1. Tap Share
+2. Tap Add to Home Screen
+3. Open Sudoku from the Home Screen icon
