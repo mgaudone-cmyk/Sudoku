@@ -1,32 +1,40 @@
-# Sudoku Notes Upgrade
+# Sudoku Onboarding Flow
 
-This version restores the full Sudoku app and improves notes.
+This version adds a proper onboarding and help system for newer Sudoku players.
 
-## New upgrades
+## New features
 
-- Larger note numbers inside cells
-- Auto notes button
-- Single-candidate hint button
-- Live conflict highlighting when the same number conflicts in a row, column, or box
-- Existing features preserved:
-  - Real Sudoku generator
-  - Unique solution validation
-  - Difficulty levels
-  - Timer
-  - Pause/resume overlay
+- First-time guided walkthrough
+- Persistent `?` help button
+- Step-by-step modal navigation
+- Back / Next / Start playing controls
+- Progress dots
+- Beginner-friendly explanations:
+  - Sudoku goal
+  - Entering numbers
   - Notes mode
-  - Hint
-  - Check
-  - Solve
-  - Matching-number highlight
-  - Mistake tracking
+  - Auto notes
+  - Single hints
+  - Mistake checking
+  - Full-screen iPhone/iPad use
 
-## How notes work
+## Existing features preserved
 
-- Notes OFF: numbers entered are final answers.
-- Notes ON: numbers entered are pencil marks/candidates.
-- Auto notes fills possible candidates based on the current board.
-- Single hint finds a cell with only one possible candidate, when available.
+- Real Sudoku generator
+- Unique solution validation
+- Difficulty levels
+- Larger note numbers
+- Auto notes
+- Single-candidate hint
+- Live conflict highlighting
+- Timer
+- Pause/resume overlay
+- Notes mode
+- Hint
+- Check
+- Solve
+- Matching-number highlight
+- Mistake tracking
 
 ## Deploy
 
@@ -35,12 +43,12 @@ Replace your GitHub repo files with:
 - `index.html`
 - `README.md`
 
-Your expected GitHub Pages URL:
+Expected GitHub Pages URL:
 
 ```text
 https://mgaudone-cmyk.github.io/Sudoku/
 ```
 
-## Best mobile experience
+## Reset onboarding
 
-Open in Safari, tap Share, then Add to Home Screen.
+The onboarding appears once automatically. To see it again, tap the `?` button.

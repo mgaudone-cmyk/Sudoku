@@ -292,6 +292,169 @@
       color:var(--blue);
     }
 
+
+    .help-button {
+      position:fixed;
+      right:max(10px, env(safe-area-inset-right));
+      top:max(10px, env(safe-area-inset-top));
+      z-index:40;
+      width:38px;
+      height:38px;
+      min-height:38px;
+      border-radius:999px;
+      border:1px solid #cbd5e1;
+      background:#ffffff;
+      color:var(--ink);
+      box-shadow:0 8px 24px rgba(15,23,42,.14);
+      font-size:20px;
+      font-weight:900;
+      padding:0;
+    }
+
+    .onboarding-overlay {
+      position:fixed;
+      inset:0;
+      z-index:80;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(15,23,42,.58);
+      backdrop-filter:blur(7px);
+      padding:18px;
+    }
+
+    .onboarding-overlay.hidden {
+      display:none;
+    }
+
+    .onboarding-card {
+      width:min(430px, 94vw);
+      max-height:82dvh;
+      overflow:auto;
+      background:#ffffff;
+      border-radius:24px;
+      box-shadow:0 24px 70px rgba(15,23,42,.35);
+      padding:20px;
+    }
+
+    .onboarding-top {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .onboarding-label {
+      color:var(--muted);
+      font-size:13px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+
+    .onboarding-close {
+      width:34px;
+      height:34px;
+      min-height:34px;
+      border-radius:999px;
+      padding:0;
+      font-size:18px;
+      line-height:1;
+    }
+
+    .onboarding-card h2 {
+      margin:6px 0 8px;
+      font-size:26px;
+      letter-spacing:-.03em;
+    }
+
+    .onboarding-card p {
+      margin:0 0 12px;
+      color:#475569;
+      font-size:15px;
+      line-height:1.4;
+    }
+
+    .onboarding-card ul {
+      margin:0 0 12px 20px;
+      padding:0;
+      color:#475569;
+      font-size:15px;
+      line-height:1.45;
+    }
+
+    .onboarding-dots {
+      display:flex;
+      justify-content:center;
+      gap:6px;
+      margin:16px 0 14px;
+    }
+
+    .onboarding-dot {
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:#cbd5e1;
+    }
+
+    .onboarding-dot.active {
+      width:22px;
+      background:var(--blue);
+    }
+
+    .onboarding-actions {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .onboarding-actions.single {
+      grid-template-columns:1fr;
+    }
+
+    .secondary {
+      background:#ffffff;
+      color:var(--ink);
+      border-color:#cbd5e1;
+    }
+
+    .mini-guide {
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:16px;
+      padding:12px;
+      margin-top:10px;
+      font-size:14px;
+      color:#475569;
+      line-height:1.4;
+    }
+
+    @media (max-width:390px) {
+      .help-button {
+        width:34px;
+        height:34px;
+        min-height:34px;
+        font-size:18px;
+      }
+
+      .onboarding-card {
+        padding:16px;
+        border-radius:20px;
+      }
+
+      .onboarding-card h2 {
+        font-size:23px;
+      }
+
+      .onboarding-card p,
+      .onboarding-card ul {
+        font-size:14px;
+      }
+    }
+
+
     .pause-overlay {
       position:absolute;
       inset:0;
@@ -525,6 +688,26 @@
 </head>
 
 <body>
+
+  <button id="helpBtn" class="help-button" aria-label="Open help">?</button>
+
+  <div id="onboardingOverlay" class="onboarding-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+    <div class="onboarding-card">
+      <div class="onboarding-top">
+        <div id="onboardingStepLabel" class="onboarding-label">Step 1 of 6</div>
+        <button id="onboardingClose" class="onboarding-close secondary" aria-label="Close onboarding">×</button>
+      </div>
+
+      <div id="onboardingContent"></div>
+      <div id="onboardingDots" class="onboarding-dots"></div>
+
+      <div id="onboardingActions" class="onboarding-actions">
+        <button id="onboardingBack" class="secondary">Back</button>
+        <button id="onboardingNext" class="primary">Next</button>
+      </div>
+    </div>
+  </div>
+
   <main class="app">
     <section class="topbar">
       <div class="stat">Time:<strong id="timer">00:00</strong></div>
@@ -1153,6 +1336,143 @@
         }
       }
     });
+
+
+    const helpBtn = document.getElementById('helpBtn');
+    const onboardingOverlay = document.getElementById('onboardingOverlay');
+    const onboardingContent = document.getElementById('onboardingContent');
+    const onboardingDots = document.getElementById('onboardingDots');
+    const onboardingStepLabel = document.getElementById('onboardingStepLabel');
+    const onboardingBack = document.getElementById('onboardingBack');
+    const onboardingNext = document.getElementById('onboardingNext');
+    const onboardingClose = document.getElementById('onboardingClose');
+
+    const onboardingSteps = [
+      {
+        title: 'Welcome to Sudoku',
+        body: `
+          <p><strong>Goal:</strong> fill every row, column, and 3×3 box with the numbers 1 to 9.</p>
+          <p>Each number can appear only once in each row, column, and box.</p>
+          <div class="mini-guide">Tip: start by looking for rows, columns, or boxes that already have many numbers.</div>
+        `
+      },
+      {
+        title: 'Selecting and entering numbers',
+        body: `
+          <p>Tap a square on the board, then tap a number from 1 to 9.</p>
+          <p>When you select a number, all matching visible numbers are highlighted so you can scan the board faster.</p>
+          <ul>
+            <li><strong>Blue outline:</strong> selected square</li>
+            <li><strong>Yellow:</strong> same number visible elsewhere</li>
+            <li><strong>Light shading:</strong> same row, column, or box</li>
+          </ul>
+        `
+      },
+      {
+        title: 'Notes mode',
+        body: `
+          <p><strong>Notes ON</strong> is pencil mode. It lets you add possible candidate numbers inside a square.</p>
+          <p><strong>Notes OFF</strong> is answer mode. Numbers entered become your final answer.</p>
+          <div class="mini-guide">Use notes when you are unsure. Turn notes off when you are ready to commit.</div>
+        `
+      },
+      {
+        title: 'Auto notes and single hints',
+        body: `
+          <p><strong>Auto notes</strong> fills possible candidates based on the current board.</p>
+          <p><strong>Single hint</strong> looks for a square that has only one possible candidate.</p>
+          <p>These are learning tools. They help newer players understand how Sudoku logic works.</p>
+        `
+      },
+      {
+        title: 'Mistakes, conflicts, and checking',
+        body: `
+          <p>If a number does not match the solution, the mistake counter increases.</p>
+          <p>If the same number conflicts in a row, column, or box, the app highlights the conflict.</p>
+          <ul>
+            <li><strong>Check:</strong> scans the board</li>
+            <li><strong>Hint:</strong> reveals one correct answer</li>
+            <li><strong>Erase:</strong> clears the selected square</li>
+          </ul>
+        `
+      },
+      {
+        title: 'Best mobile experience',
+        body: `
+          <p>For the best full-screen feel on iPhone or iPad:</p>
+          <ul>
+            <li>Open the game in Safari</li>
+            <li>Tap the Share button</li>
+            <li>Tap <strong>Add to Home Screen</strong></li>
+            <li>Launch Sudoku from the new icon</li>
+          </ul>
+          <div class="mini-guide">You can reopen this guide anytime with the <strong>?</strong> button.</div>
+        `
+      }
+    ];
+
+    let onboardingIndex = 0;
+
+    function renderOnboarding() {
+      const step = onboardingSteps[onboardingIndex];
+
+      onboardingStepLabel.textContent = `Step ${onboardingIndex + 1} of ${onboardingSteps.length}`;
+      onboardingContent.innerHTML = `<h2 id="onboardingTitle">${step.title}</h2>${step.body}`;
+
+      onboardingDots.innerHTML = '';
+      onboardingSteps.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'onboarding-dot' + (i === onboardingIndex ? ' active' : '');
+        onboardingDots.appendChild(dot);
+      });
+
+      onboardingBack.disabled = onboardingIndex === 0;
+      onboardingBack.style.opacity = onboardingIndex === 0 ? '.45' : '1';
+      onboardingNext.textContent = onboardingIndex === onboardingSteps.length - 1 ? 'Start playing' : 'Next';
+
+      const actions = document.getElementById('onboardingActions');
+      actions.classList.toggle('single', onboardingIndex === 0);
+      onboardingBack.style.display = onboardingIndex === 0 ? 'none' : 'block';
+    }
+
+    function openOnboarding(startAt = 0) {
+      onboardingIndex = startAt;
+      renderOnboarding();
+      onboardingOverlay.classList.remove('hidden');
+    }
+
+    function closeOnboarding() {
+      onboardingOverlay.classList.add('hidden');
+      localStorage.setItem('sudokuOnboardingSeen', 'true');
+    }
+
+    helpBtn.addEventListener('click', () => openOnboarding(0));
+    onboardingClose.addEventListener('click', closeOnboarding);
+
+    onboardingBack.addEventListener('click', () => {
+      if (onboardingIndex > 0) {
+        onboardingIndex--;
+        renderOnboarding();
+      }
+    });
+
+    onboardingNext.addEventListener('click', () => {
+      if (onboardingIndex < onboardingSteps.length - 1) {
+        onboardingIndex++;
+        renderOnboarding();
+      } else {
+        closeOnboarding();
+      }
+    });
+
+    onboardingOverlay.addEventListener('click', e => {
+      if (e.target === onboardingOverlay) closeOnboarding();
+    });
+
+    if (!localStorage.getItem('sudokuOnboardingSeen')) {
+      setTimeout(() => openOnboarding(0), 350);
+    }
+
 
     renderNumbers();
     newGame();
