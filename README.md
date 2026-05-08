@@ -1,24 +1,12 @@
-# Sudoku Onboarding Flow
+# Sudoku iPad Dynamic Fix
 
-This version adds a proper onboarding and help system for newer Sudoku players.
+This version keeps the full working Sudoku game and fixes the iPad top clipping issue using dynamic board sizing.
 
-## New features
+## Fix
 
-- First-time guided walkthrough
-- Persistent `?` help button
-- Step-by-step modal navigation
-- Back / Next / Start playing controls
-- Progress dots
-- Beginner-friendly explanations:
-  - Sudoku goal
-  - Entering numbers
-  - Notes mode
-  - Auto notes
-  - Single hints
-  - Mistake checking
-  - Full-screen iPhone/iPad use
+The board now calculates its size based on the real visible browser area instead of relying on fixed CSS viewport estimates. This is especially important on iPad Safari.
 
-## Existing features preserved
+## Features preserved
 
 - Real Sudoku generator
 - Unique solution validation
@@ -27,6 +15,8 @@ This version adds a proper onboarding and help system for newer Sudoku players.
 - Auto notes
 - Single-candidate hint
 - Live conflict highlighting
+- First-time onboarding flow
+- Help button
 - Timer
 - Pause/resume overlay
 - Notes mode
@@ -43,12 +33,12 @@ Replace your GitHub repo files with:
 - `index.html`
 - `README.md`
 
-Expected GitHub Pages URL:
+Expected URL:
 
 ```text
 https://mgaudone-cmyk.github.io/Sudoku/
 ```
 
-## Reset onboarding
+## Best full-screen experience
 
-The onboarding appears once automatically. To see it again, tap the `?` button.
+On iPhone or iPad, open in Safari, tap Share, then Add to Home Screen.
