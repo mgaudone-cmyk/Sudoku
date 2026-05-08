@@ -1,10 +1,14 @@
-# Sudoku iPad Dynamic Fix
+# Sudoku Stable iPad Layout
 
-This version keeps the full working Sudoku game and fixes the iPad top clipping issue using dynamic board sizing.
+This version fixes the iPad clipping problem by changing the layout strategy.
 
-## Fix
+## What changed
 
-The board now calculates its size based on the real visible browser area instead of relying on fixed CSS viewport estimates. This is especially important on iPad Safari.
+- The app no longer hard-locks the page with `overflow:hidden`.
+- The board size is calculated from the real visible screen area.
+- iPad landscape now shrinks the board before cutting off controls.
+- iPad portrait and Home Screen web-app mode use safer top spacing.
+- If the browser leaves too little room, the page can scroll slightly instead of clipping the board or controls.
 
 ## Features preserved
 

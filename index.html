@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Sudoku" />
   <meta name="theme-color" content="#f8fafc" />
   <title>Sudoku</title>
@@ -38,9 +38,7 @@
     html, body {
       margin:0;
       width:100%;
-      height:100%;
       min-height:100%;
-      overflow:hidden;
       font-family:Arial, Helvetica, sans-serif;
       background:var(--bg);
       color:var(--ink);
@@ -48,26 +46,37 @@
       touch-action:manipulation;
     }
 
+    html {
+      height:100%;
+    }
+
+    body {
+      min-height:100%;
+      overflow-x:hidden;
+      overflow-y:auto;
+      overscroll-behavior:none;
+    }
+
     body {
       padding:
-        max(4px, env(safe-area-inset-top))
-        max(4px, env(safe-area-inset-right))
-        max(4px, env(safe-area-inset-bottom))
-        max(4px, env(safe-area-inset-left));
+        max(10px, env(safe-area-inset-top))
+        max(8px, env(safe-area-inset-right))
+        max(10px, env(safe-area-inset-bottom))
+        max(8px, env(safe-area-inset-left));
     }
 
     .app {
       width:100%;
-      height:100%;
+      min-height:calc(var(--app-height, 100vh) - 20px);
       max-width:1180px;
       margin:0 auto;
       display:grid;
-      grid-template-rows:auto minmax(0,1fr);
-      gap:5px;
+      grid-template-rows:auto auto;
+      gap:6px;
       background:var(--panel);
       border-radius:18px;
-      overflow:hidden;
-      padding:6px;
+      overflow:visible;
+      padding:8px;
     }
 
     .topbar {
@@ -100,16 +109,17 @@
     .game {
       min-height:0;
       display:grid;
-      grid-template-rows:minmax(0,1fr) auto;
-      gap:5px;
-      overflow:hidden;
+      grid-template-rows:auto auto;
+      gap:6px;
+      overflow:visible;
+      align-content:start;
     }
 
     .board-zone {
       min-height:0;
       display:flex;
       flex-direction:column;
-      justify-content:center;
+      justify-content:flex-start;
       align-items:center;
       gap:5px;
       overflow:hidden;
@@ -119,7 +129,7 @@
       width:var(--board-size, min(100%, 520px));
       height:var(--board-size, auto);
       max-width:100%;
-      max-height:100%;
+      max-height:none;
       position:relative;
       flex:0 0 auto;
     }
@@ -497,16 +507,16 @@
     @media (min-width:700px) {
       body {
         padding:
-          max(12px, env(safe-area-inset-top))
-          max(12px, env(safe-area-inset-right))
-          max(12px, env(safe-area-inset-bottom))
-          max(12px, env(safe-area-inset-left));
+          max(14px, env(safe-area-inset-top))
+          max(14px, env(safe-area-inset-right))
+          max(14px, env(safe-area-inset-bottom))
+          max(14px, env(safe-area-inset-left));
       }
 
       .app {
         border-radius:28px;
-        padding:16px;
-        gap:12px;
+        padding:14px;
+        gap:10px;
         box-shadow:0 10px 30px rgba(15,23,42,.12);
       }
 
@@ -521,32 +531,33 @@
       }
 
       .game {
-        grid-template-columns:minmax(0,1fr) minmax(270px,340px);
-        grid-template-rows:1fr;
-        align-items:center;
-        gap:18px;
+        grid-template-columns:minmax(0,1fr) minmax(250px,320px);
+        grid-template-rows:auto;
+        align-items:start;
+        gap:14px;
       }
 
       .board-zone {
-        gap:10px;
-        justify-content:center;
+        gap:8px;
+        justify-content:flex-start;
       }
 
       .game-area {
-        width:var(--board-size, min(100%, 720px));
+        width:var(--board-size, min(100%, 640px));
         height:var(--board-size, auto);
         max-width:100%;
       }
 
       .message {
-        max-width:720px;
-        min-height:38px;
-        font-size:14px;
+        max-width:640px;
+        min-height:30px;
+        font-size:13px;
+        padding:6px 8px;
       }
 
       .controls {
-        align-self:center;
-        gap:10px;
+        align-self:start;
+        gap:8px;
       }
 
       .numbers {
@@ -556,14 +567,14 @@
 
       .num {
         aspect-ratio:1/1;
-        min-height:68px;
-        font-size:28px;
+        min-height:56px;
+        font-size:24px;
       }
 
       button, select {
-        min-height:50px;
-        font-size:17px;
-        border-radius:14px;
+        min-height:42px;
+        font-size:15px;
+        border-radius:12px;
       }
 
       .cell {
@@ -574,12 +585,12 @@
     @media (min-width:700px) and (orientation:portrait) {
       .game {
         grid-template-columns:1fr;
-        grid-template-rows:minmax(0,1fr) auto;
-        gap:10px;
+        grid-template-rows:auto auto;
+        gap:8px;
       }
 
       .game-area {
-        width:var(--board-size, min(100%, 680px));
+        width:var(--board-size, min(100%, 600px));
         height:var(--board-size, auto);
       }
 
@@ -595,8 +606,8 @@
 
       .num {
         aspect-ratio:auto;
-        min-height:52px;
-        font-size:24px;
+        min-height:42px;
+        font-size:20px;
       }
     }
 
@@ -678,6 +689,50 @@
         font-size:17px;
       }
     }
+
+
+    @media (min-width:700px) and (orientation:landscape) {
+      .topbar {
+        min-height:34px;
+      }
+
+      .stat {
+        min-height:34px;
+        font-size:13px;
+      }
+
+      .message {
+        min-height:26px;
+        font-size:12px;
+      }
+
+      .controls {
+        gap:6px;
+      }
+
+      .numbers {
+        gap:6px;
+      }
+
+      .num {
+        min-height:48px;
+        font-size:22px;
+      }
+
+      button,
+      select {
+        min-height:38px;
+        font-size:14px;
+        padding:6px;
+      }
+    }
+
+    @media (display-mode:standalone) {
+      body {
+        padding-top:max(18px, env(safe-area-inset-top));
+      }
+    }
+
 
     @media (display-mode:standalone) {
       body {
@@ -1297,7 +1352,7 @@
         setMessage('Select a square, then enter a number.');
         startTimer();
         renderBoard();
-        setTimeout(updateBoardSize, 40);
+        setTimeout(updateLayoutMetrics, 40);
       }, 20);
     }
 
@@ -1481,6 +1536,12 @@
 
 
 
+    function updateLayoutMetrics() {
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      document.documentElement.style.setProperty('--app-height', `${vh}px`);
+      updateBoardSize();
+    }
+
     function updateBoardSize() {
       const app = document.querySelector('.app');
       const topbar = document.querySelector('.topbar');
@@ -1495,55 +1556,74 @@
       const viewportHeight = vv ? vv.height : window.innerHeight;
       const viewportWidth = vv ? vv.width : window.innerWidth;
 
-      const appStyles = getComputedStyle(app);
-      const appPadY = parseFloat(appStyles.paddingTop) + parseFloat(appStyles.paddingBottom);
-      const appPadX = parseFloat(appStyles.paddingLeft) + parseFloat(appStyles.paddingRight);
-      const appGap = parseFloat(appStyles.rowGap || appStyles.gap || 0);
+      const appStyle = getComputedStyle(app);
+      const appPadX = parseFloat(appStyle.paddingLeft) + parseFloat(appStyle.paddingRight);
+      const appPadY = parseFloat(appStyle.paddingTop) + parseFloat(appStyle.paddingBottom);
+      const appGap = parseFloat(appStyle.rowGap || appStyle.gap || 0);
 
-      const gameStyles = getComputedStyle(game);
-      const columns = gameStyles.gridTemplateColumns.split(' ').filter(Boolean);
-      const isSideBySide = viewportWidth >= 700 && columns.length > 1 && window.matchMedia('(orientation: landscape)').matches;
+      const bodyStyle = getComputedStyle(document.body);
+      const bodyPadY = parseFloat(bodyStyle.paddingTop) + parseFloat(bodyStyle.paddingBottom);
+      const bodyPadX = parseFloat(bodyStyle.paddingLeft) + parseFloat(bodyStyle.paddingRight);
 
-      const topbarHeight = topbar.getBoundingClientRect().height;
-      const messageHeight = message.getBoundingClientRect().height;
+      const topbarH = topbar.getBoundingClientRect().height;
+      const messageH = message.getBoundingClientRect().height;
       const controlsRect = controls.getBoundingClientRect();
       const boardZoneRect = boardZone.getBoundingClientRect();
+
+      const isTablet = viewportWidth >= 700;
+      const isLandscape = viewportWidth > viewportHeight;
+      const isSideBySide = isTablet && isLandscape;
 
       let availableHeight;
       let availableWidth;
 
       if (isSideBySide) {
-        availableHeight = viewportHeight - appPadY - topbarHeight - messageHeight - appGap - 34;
-        availableWidth = viewportWidth - appPadX - controlsRect.width - 44;
+        availableHeight = viewportHeight - bodyPadY - appPadY - topbarH - messageH - appGap - 28;
+        availableWidth = viewportWidth - bodyPadX - appPadX - controlsRect.width - 40;
       } else {
-        availableHeight = viewportHeight - appPadY - topbarHeight - controlsRect.height - messageHeight - appGap - 42;
-        availableWidth = boardZoneRect.width - 6;
+        availableHeight = viewportHeight - bodyPadY - appPadY - topbarH - controlsRect.height - messageH - appGap - 30;
+        availableWidth = Math.min(boardZoneRect.width || viewportWidth, viewportWidth - bodyPadX - appPadX - 8);
       }
 
-      const maxSize = viewportWidth >= 700 ? 720 : 520;
-      let size = Math.floor(Math.min(availableHeight, availableWidth, maxSize));
+      const maxBoard = isTablet ? (isSideBySide ? 600 : 620) : 520;
+      const minBoard = isTablet ? 330 : 260;
 
-      if (viewportWidth < 700) {
-        size = Math.floor(Math.min(size, viewportWidth - appPadX - 10));
-      }
+      let size = Math.floor(Math.min(availableHeight, availableWidth, maxBoard));
 
-      size = Math.max(240, size);
-      document.documentElement.style.setProperty('--board-size', size + 'px');
+      if (!Number.isFinite(size)) size = 360;
+      size = Math.max(minBoard, size);
+
+      if (size > availableHeight) size = Math.max(240, Math.floor(availableHeight));
+      if (size > availableWidth) size = Math.max(240, Math.floor(availableWidth));
+
+      document.documentElement.style.setProperty('--board-size', `${size}px`);
     }
 
-    window.addEventListener('resize', updateBoardSize);
-    window.addEventListener('orientationchange', () => setTimeout(updateBoardSize, 250));
+    window.addEventListener('resize', () => {
+      requestAnimationFrame(updateLayoutMetrics);
+      setTimeout(updateLayoutMetrics, 200);
+    });
+
+    window.addEventListener('orientationchange', () => {
+      setTimeout(updateLayoutMetrics, 250);
+      setTimeout(updateLayoutMetrics, 700);
+    });
 
     if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', updateBoardSize);
-      window.visualViewport.addEventListener('scroll', updateBoardSize);
+      window.visualViewport.addEventListener('resize', () => {
+        requestAnimationFrame(updateLayoutMetrics);
+      });
+      window.visualViewport.addEventListener('scroll', () => {
+        requestAnimationFrame(updateLayoutMetrics);
+      });
     }
 
 
     renderNumbers();
     newGame();
-    setTimeout(updateBoardSize, 80);
-    setTimeout(updateBoardSize, 450);
+    setTimeout(updateLayoutMetrics, 60);
+    setTimeout(updateLayoutMetrics, 300);
+    setTimeout(updateLayoutMetrics, 900);
   </script>
 </body>
 </html>
